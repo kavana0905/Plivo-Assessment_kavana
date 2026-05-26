@@ -1,0 +1,106 @@
+{
+  "name": "WF2 - Answer",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "answer",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "de7b3ce4-2aaf-41ce-81d0-870ece01e330",
+      "name": "Webhook",
+      "webhookId": "b0ebfc89-bbab-4eca-9406-df4da86cad53"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aa94cb65-783d-49af-958e-d79064975a86",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response>   <GetDigits action=\"https://n8n.srv1461571.hstgr.cloud/webhook/OTP\" method=\"POST\" numDigits=\"4\" timeout=\"10\" retries=\"1\">     <Speak>Welcome to InspireWorks. Please enter your 4-digit OTP.</Speak>   </GetDigits> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3ead2c1b-afe1-4e6f-b7cd-e43c8b6aed2a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.xml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        416,
+        0
+      ],
+      "id": "dec1b3f9-a3bc-441d-8fc0-ce24e852be6d",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "430c261f-bd64-4e71-ab68-34fcb73adc97",
+  "meta": {
+    "instanceId": "6495d3127055aa7eb6dfefdd9481976e29acc779c67a3d05878e1e7e748e19af"
+  },
+  "id": "fISkjmL2dZb9YpGx",
+  "tags": []
+}

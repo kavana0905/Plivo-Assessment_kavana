@@ -1,0 +1,106 @@
+{
+  "name": "WF4 - Menu",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "menu",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -464,
+        -16
+      ],
+      "id": "37d5b013-b79f-45cc-8142-f75fa5c475c9",
+      "name": "Webhook",
+      "webhookId": "48019306-90b7-43e9-88d9-ff761776c2ba"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.xml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        160,
+        -16
+      ],
+      "id": "32526364-9c3d-4e57-92f1-427c18968794",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7376ba4e-7c83-451c-82b4-1ce76e3e071a",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response> <GetDigits action=\"https://n8n.srv1461571.hstgr.cloud/webhook/action\" method=\"POST\" numDigits=\"1\" timeout=\"10\"> <Speak>Press 1 to hear a song. Press 2 to connect to an associate.</Speak> </GetDigits> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        -16
+      ],
+      "id": "d0f72c79-339d-41e4-851d-06889863a049",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "8fc700c3-78ac-4e37-9259-6c720c9ffc13",
+  "meta": {
+    "instanceId": "6495d3127055aa7eb6dfefdd9481976e29acc779c67a3d05878e1e7e748e19af"
+  },
+  "id": "GAHaj6vnjOYWeXlB",
+  "tags": []
+}

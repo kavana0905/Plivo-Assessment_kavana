@@ -1,0 +1,68 @@
+{
+  "name": "WF1 - Start Call",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2159372d-49eb-4647-8918-c9950b6b24c4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.plivo.com/v1/Account/MAZWM1MMZIZDVKY2Y2OG/Call/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"from\": \"+91 22 6423 2030\",\n  \"to\": \"+91 86180 77004\",\n  \"answer_url\": \"https://n8n.srv1461571.hstgr.cloud/webhook/answer\",\n  \"answer_method\": \"POST\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a2677918-1fc5-4c88-8fa2-279614ad3f79",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "NEXE1wvnb39wx9r8",
+          "name": "Unnamed credential"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6b8c2659-26f8-4137-8bdd-23ec8023b11f",
+  "meta": {
+    "instanceId": "6495d3127055aa7eb6dfefdd9481976e29acc779c67a3d05878e1e7e748e19af"
+  },
+  "id": "BHvF7xqgqfK8xzfw",
+  "tags": []
+}

@@ -1,0 +1,192 @@
+{
+  "name": "WF3 - OTP",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "OTP",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f8c72186-e95f-49dc-a9e9-5da2c988d7ae",
+      "name": "Webhook",
+      "webhookId": "fdb6c95b-4793-4e60-b53a-71a99afacb2f"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c5751ba0-75f9-498e-9862-80f095016741",
+              "leftValue": "={{ $json.body.Digits }}",
+              "rightValue": "0906",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "85ae72e5-81d1-40ea-b6be-b7b21a9f9259",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.xml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "b765901e-0526-4f2a-9652-4cc36d5fd1c9",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc8f41df-254c-45f5-8f4b-ee0d7f46fe3a",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response> <GetDigits action=\"https://n8n.srv1461571.hstgr.cloud/webhook/menu\" method=\"POST\" numDigits=\"1\" timeout=\"10\"> <Speak>Press 1 for English.</Speak> </GetDigits> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        -96
+      ],
+      "id": "944bdfb8-1042-45da-89d2-1392ce0f5221",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55a14834-ef2a-4779-8c1e-ce2ea1cb4307",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response>   <GetDigits action=\"https://n8n.srv1461571.hstgr.cloud/webhook/OTP\" method=\"POST\" numDigits=\"4\" timeout=\"10\" retries=\"1\">     <Speak>Incorrect OTP. Please try again.</Speak>   </GetDigits> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        112
+      ],
+      "id": "4610ee32-0e2b-4fb2-9a35-d0d978854405",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7e43126b-14db-477f-8658-2cb9b159f00a",
+  "meta": {
+    "instanceId": "6495d3127055aa7eb6dfefdd9481976e29acc779c67a3d05878e1e7e748e19af"
+  },
+  "id": "BqaEz7VblnLdz6xx",
+  "tags": []
+}

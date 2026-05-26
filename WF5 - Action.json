@@ -1,0 +1,220 @@
+{
+  "name": "WF5 - Action",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "action",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "011345e8-eb49-431b-a40a-64f17a7cdf39",
+      "name": "Webhook",
+      "webhookId": "50ffd63c-8f5e-4c6d-81d1-5825bd2ebda4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.Digits }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "2611c040-65cc-4ec2-bdc9-94849770e7e3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ba0dd431-b5ad-4a61-8192-862c845ba0d5",
+                    "leftValue": "={{ $json.body.Digits }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "bda49bdb-f5dc-4e2a-aeec-87bc084c1e73",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2dd50011-ff7b-4e46-ad2f-f0c8feb9c7d5",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response> <Play>https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3</Play> <Speak>Thank you for calling. Goodbye.</Speak> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        -256
+      ],
+      "id": "2bbc1ecb-8de8-4dd6-ac38-e06d5bd7577e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83eefc41-ee6a-4145-95cf-3849aa487189",
+              "name": "xml",
+              "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Response> <Speak>Please wait while we connect your call.</Speak> <Dial> <Number>+918618077004</Number> </Dial> </Response>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        128
+      ],
+      "id": "da1f4161-930d-4e05-8279-3b466d745af2",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.xml }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1136,
+        -48
+      ],
+      "id": "89d6c929-a473-46db-a8e7-1332d7ad10f0",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9ee81f6c-85fb-4096-a955-afe8e861b28d",
+  "meta": {
+    "instanceId": "6495d3127055aa7eb6dfefdd9481976e29acc779c67a3d05878e1e7e748e19af"
+  },
+  "id": "VYkiTFv0EJiQEJxf",
+  "tags": []
+}
